@@ -1,15 +1,15 @@
-import { Box } from "@mui/material"
-import { BrowserRouter } from "react-router-dom"
+import React from 'react';
 
 function App() {
-  return (
-    <div className="app">
-      <BrowserRouter>
-        <Box width="100%" height="100%" padding="1rem 2rem 4rem 3rem">
+    const [count, setCount] = React.useState(0);
 
-        </Box>
-      </BrowserRouter>
-    </div>
-  )
+    return (
+        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+            <h1>Hello, React + Vite!</h1>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+    );
 }
-export default App
+
+export default App;

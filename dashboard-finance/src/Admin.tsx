@@ -62,7 +62,7 @@ const data = {
   ],
 };
 
-const AdminDashboard: React.FC = () => {
+const Admin: React.FC = () => {
   return (
     <AdminWrapper>
       <Navbar>

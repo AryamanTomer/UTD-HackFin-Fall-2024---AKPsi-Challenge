@@ -36,6 +36,102 @@ app.get("/profile", authenticateToken, async (req, res) => {
         res.status(500).json({ error: "Failed to fetch profile" });
     }
 });
+
+app.post('/api/budget/create', async (req, res) => {
+    try {
+      const { category, allocatedAmount, spentAmount, lowBalanceReminderSent, approvalStatus } = req.body;
+      const remainingAmount = allocatedAmount - spentAmount;
+  
+      const budget = new Budget({
+        category,
+        allocatedAmount,
+        spentAmount,
+        remainingAmount,
+        lowBalanceReminderSent,
+        approvalStatus,
+      });
+  
+      await budget.save();
+      res.status(201).json({ message: 'Budget created successfully', data: budget });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating budget', error });
+    }
+  });
+
+app.post('/api/dues/create', async (req, res) => {
+    try {
+      const { member, amount, dueDate, status } = req.body;
+  
+      const dues = new Dues({
+        member,
+        amount,
+        dueDate,
+        status,
+      });
+  
+      await dues.save();
+      res.status(201).json({ message: 'Dues created successfully', data: dues });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating dues', error });
+    }
+  });
+
+app.post('/api/fundraising/create', async (req, res) => {
+    try {
+      const { goalAmount, raisedAmount, sponsors, deadline, contributors } = req.body;
+  
+      const fundraising = new Fundraising({
+        goalAmount,
+        raisedAmount,
+        sponsors,
+        goalAchieved: raisedAmount >= goalAmount,
+        deadline,
+        contributors,
+      });
+  
+      await fundraising.save();
+      res.status(201).json({ message: 'Fundraising campaign created successfully', data: fundraising });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating fundraising campaign', error });
+    }
+  });
+
+app.post('/api/reminder/create', async (req, res) => {
+    try {
+      const { user, dueType, lastSent, status } = req.body;
+  
+      const reminder = new Reminder({
+        user,
+        dueType,
+        lastSent,
+        status,
+      });
+  
+      await reminder.save();
+      res.status(201).json({ message: 'Reminder created successfully', data: reminder });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating reminder', error });
+    }
+  });
+
+app.post('/api/report/create', async (req, res) => {
+    try {
+      const { generatedBy, type, reportData, eventProfitability } = req.body;
+  
+      const report = new Report({
+        generatedBy,
+        type,
+        reportData,
+        eventProfitability,
+      });
+  
+      await report.save();
+      res.status(201).json({ message: 'Report created successfully', data: report });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating report', error });
+    }
+  });
+
 app.get("/users", async (req, res) => {
     try {
         const users = await User.find();

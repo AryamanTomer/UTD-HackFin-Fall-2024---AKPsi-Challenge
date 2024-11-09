@@ -5,6 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
+
+import { authenticateToken } from "./authMiddleware.js";
+import authRouter from "./routers/AuthenticationRouter.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { User } from "./models/UserModel.js";
 import { Dues } from "./models/DuesModel.js";
@@ -22,7 +25,17 @@ app.use(morgan("common"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cors());
+app.use("/auth", authRouter);
+app.get("/profile", authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId).select("-password");
+        if (!user) return res.status(404).json({ error: "User not found" });
 
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch profile" });
+    }
+});
 app.get("/users", async (req, res) => {
     try {
         const users = await User.find();

@@ -26,7 +26,7 @@ const Admin: React.FC = () => {
       <div className="navbar">
         <Link to="/budget_drafter" className="nav-item">Draft a Budget</Link>
         <Link to="/sponsors" className="nav-item">View Sponsors</Link>
-        <div className="nav-item">Track Dues/Fees</div>
+        <Link to="/dues-and-fees" className="nav-item">Track Dues and Fees</Link>
         <div className="nav-item">Fundraising</div>
       </div>
 

@@ -5,6 +5,8 @@ import Member from '@/Member'
 import Login from '@/Login'
 import Budget from '@/Budget'
 import Sponsors from '@/Sponsors'
+import Duesandfees from '@/dues-and-fees'
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const App: React.FC = () => {
@@ -16,6 +18,7 @@ const App: React.FC = () => {
         <Route path="/admin" element={<Admin />} /> 
         <Route path="/budget_drafter" element={<Budget/>}/>
         <Route path="/sponsors" element={<Sponsors/>}/>
+        <Route path="/dues-and-fees" element={<Duesandfees />} />
 
       </Routes> 
     </Router>

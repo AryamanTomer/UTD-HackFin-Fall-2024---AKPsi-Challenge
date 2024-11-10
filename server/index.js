@@ -36,6 +36,137 @@ app.get("/profile", authenticateToken, async (req, res) => {
         res.status(500).json({ error: "Failed to fetch profile" });
     }
 });
+
+app.post('/api/budget/create', async (req, res) => {
+    try {
+      const { category, allocatedAmount, spentAmount, lowBalanceReminderSent, approvalStatus } = req.body;
+      const remainingAmount = allocatedAmount - spentAmount;
+  
+      const budget = new Budget({
+        category,
+        allocatedAmount,
+        spentAmount,
+        remainingAmount,
+        lowBalanceReminderSent,
+        approvalStatus,
+      });
+  
+      await budget.save();
+      res.status(201).json({ message: 'Budget created successfully', data: budget });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating budget', error });
+    }
+  });
+
+app.post('/api/dues/create', async (req, res) => {
+    try {
+      const { member, amount, dueDate, status } = req.body;
+  
+      const dues = new Dues({
+        member,
+        amount,
+        dueDate,
+        status,
+      });
+  
+      await dues.save();
+      res.status(201).json({ message: 'Dues created successfully', data: dues });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating dues', error });
+    }
+  });
+  app.get('/api/dues', async (req, res) => {
+    try {
+      const dues = await Dues.find();
+      res.status(200).json({ message: 'Dues retrieved successfully', data: dues });
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving dues', error });
+    }
+  });
+  app.get('/api/dues/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const due = await Dues.findById(id);
+  
+      if (!due) {
+        return res.status(404).json({ message: 'Dues not found' });
+      }
+  
+      res.status(200).json({ message: 'Due retrieved successfully', data: due });
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving due', error });
+    }
+  });
+  app.delete('/api/dues/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const due = await Dues.findByIdAndDelete(id);
+  
+      if (!due) {
+        return res.status(404).json({ message: 'Dues not found' });
+      }
+  
+      res.status(200).json({ message: 'Dues deleted successfully', data: due });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting due', error });
+    }
+  });
+app.post('/api/fundraising/create', async (req, res) => {
+    try {
+      const { goalAmount, raisedAmount, sponsors, deadline, contributors } = req.body;
+  
+      const fundraising = new Fundraising({
+        goalAmount,
+        raisedAmount,
+        sponsors,
+        goalAchieved: raisedAmount >= goalAmount,
+        deadline,
+        contributors,
+      });
+  
+      await fundraising.save();
+      res.status(201).json({ message: 'Fundraising campaign created successfully', data: fundraising });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating fundraising campaign', error });
+    }
+  });
+
+app.post('/api/reminder/create', async (req, res) => {
+    try {
+      const { user, dueType, lastSent, status } = req.body;
+  
+      const reminder = new Reminder({
+        user,
+        dueType,
+        lastSent,
+        status,
+      });
+  
+      await reminder.save();
+      res.status(201).json({ message: 'Reminder created successfully', data: reminder });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating reminder', error });
+    }
+  });
+
+app.post('/api/report/create', async (req, res) => {
+    try {
+      const { generatedBy, type, reportData, eventProfitability } = req.body;
+  
+      const report = new Report({
+        generatedBy,
+        type,
+        reportData,
+        eventProfitability,
+      });
+  
+      await report.save();
+      res.status(201).json({ message: 'Report created successfully', data: report });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating report', error });
+    }
+  });
+
 app.get("/users", async (req, res) => {
     try {
         const users = await User.find();
@@ -145,30 +276,47 @@ app.get("/transactions", async (req, res) => {
     }
 });
 
+app.post('/api/budget_drafter', async (req, res) => {
+    try{
+        const { capital,insurance, fees, outreach, brotherhood, charity, rushEvents } = req.body;
+        const categories = {
+            capital,
+            insurance,
+            fees,
+            outreach,
+            brotherhood,
+            charity,
+            rushEvents
+          };
+        //call fetchBudgetData and store it in data
+        const data = await fetchBudgetData(categories);
+        //send date
+        res.send(data.response.candidates[0].content.parts[0].text);
+    }catch(error){
+        res.status(500).send({error: "Failed to fetch data"}); //handle err
+    }
+})
+
 const PORT = process.env.PORT || 9000;
 mongoose
     .connect(process.env.MONGO_URL)
     .then(async () => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-        app.get('/budget_drafter', async (req, res) => {
-            try{
-                //call fetchBudgetData and store it in data
-                const data = await fetchBudgetData();
-                //send date
-                res.send(data.response.candidates[0].content.parts[0].text);
-            }catch(error){
-                res.status(500).send({error: "Failed to fetch data"}); //handle err
-            }
-        })
     })
     .catch((error) => console.log(`${error} did not connect`));
 
-    async function fetchBudgetData(){
+    async function fetchBudgetData(categories){
         //new instance of gemini w api key
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const prompt = "This is just a test, say hi";
-
+        const prompt = `You are a financial advisor for a frat, they have ${categories.capital} for the school year, in addition to that they have to pay ${categories.insurance} for insurance  and ${categories.fees} in fees
+        they have ranked 4 categories they want to spend the capital on 1-5 1 being most important 5 being least important, here are the ratings
+        Outreach: ${categories.outreach}, 
+        Brotherhood: ${categories.brotherhood}, 
+        Charity: ${categories.charity}, 
+        RushEvents: ${categories.rushEvents} 
+        based on this information come up with a budget that allocates capital to these resources based on their ratings, include the insurance and fees in your output. make the output a javascript object format with no additional text, just the required output if there is any amount left over add that as well, also dont add any desctiptions ONLY SEND IT AS A JAVASCRIPT OBJECT NO JSON `;
+        console.log(`${categories.insurance}`)
     const result = await model.generateContent(prompt); 
     return result;  
     }

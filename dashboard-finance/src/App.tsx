@@ -1,15 +1,31 @@
-import { Box } from "@mui/material"
-import { BrowserRouter } from "react-router-dom"
 
-function App() {
+import React from 'react';
+import Admin from '@/Admin'; // Import the AdminDashboard component
+import Member from '@/Member'
+import Login from '@/Login'
+import Budget from '@/Budget'
+import Sponsors from '@/Sponsors'
+import Duesandfees from '@/dues-and-fees'
+import Fundraising from '@/fundraising'
+import PayStuff from '@/PayDues'
+
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+const App: React.FC = () => {
   return (
-    <div className="app">
-      <BrowserRouter>
-        <Box width="100%" height="100%" padding="1rem 2rem 4rem 3rem">
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} /> 
+        <Route path="/user" element={<Member />} />
+        <Route path="/admin" element={<Admin />} /> 
+        <Route path="/budget_drafter" element={<Budget/>}/>
+        <Route path="/sponsors" element={<Sponsors/>}/>
+        <Route path="/dues-and-fees" element={<Duesandfees />} />
+        <Route path="/fundraising" element={<Fundraising />} />
+        <Route path="/PayDues" element={<PayStuff />} />
+      </Routes> 
+    </Router>
+  );
+};
 
-        </Box>
-      </BrowserRouter>
-    </div>
-  )
-}
-export default App
+export default App;

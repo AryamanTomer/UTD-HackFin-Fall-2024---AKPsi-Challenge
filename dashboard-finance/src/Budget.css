@@ -1,0 +1,151 @@
+/* General Container */
+.budg_cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content horizontally */
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 20px;
+    font-family: 'Arial', sans-serif; /* Modern font */
+  }
+  
+  /* Navbar Styling */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3f51b5; /* Modern blue color */
+    padding: 15px 20px;
+    color: white;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+  }
+  
+  .nav-item {
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .nav-item:hover {
+    text-decoration: underline;
+    color: #ffd700; /* Subtle golden highlight */
+  }
+  
+  /* Budget Form Container */
+  .Budget-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px; /* Constrain the form width */
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  /* Form Titles */
+  h1, h2 {
+    text-align: center;
+    color: #3f51b5;
+    margin: 0;
+  }
+  
+  /* Form Input Row */
+  .cat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .cat p {
+    flex: 1;
+    margin: 0;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .cat input {
+    flex: 0.5;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  .cat input:focus {
+    border-color: #3f51b5;
+    outline: none;
+  }
+  
+  /* Submit Button */
+  .subbutton {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .subbutton button {
+    background-color: #3f51b5;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .subbutton button:hover {
+    background-color: #283593;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Pie Chart Section */
+  .section {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .section h3 {
+    margin: 0;
+    color: #3f51b5;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .Budget-container {
+      width: 90%;
+      padding: 20px;
+    }
+  
+    .cat {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .cat input {
+      width: 100%;
+      max-width: none;
+    }
+  
+    .navbar {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  

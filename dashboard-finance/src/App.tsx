@@ -1,18 +1,25 @@
-import { Box } from "@mui/material"
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter } from "react-router-dom"
-const queryClient = new QueryClient();
-function App() {
+
+import React from 'react';
+import Admin from '@/Admin'; // Import the AdminDashboard component
+import Member from '@/Member'
+import Login from '@/Login'
+import Budget from '@/Budget'
+import Sponsors from '@/Sponsors'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+const App: React.FC = () => {
   return (
-    <div className="app">
-      <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Box width="100%" height="100%" padding="1rem 2rem 4rem">
-          
-        </Box>
-      </BrowserRouter>
-      </QueryClientProvider>
-    </div>
-  )
-}
-export default App
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} /> 
+        <Route path="/user" element={<Member />} />
+        <Route path="/admin" element={<Admin />} /> 
+        <Route path="/budget_drafter" element={<Budget/>}/>
+        <Route path="/sponsors" element={<Sponsors/>}/>
+
+      </Routes> 
+    </Router>
+  );
+};
+
+export default App;

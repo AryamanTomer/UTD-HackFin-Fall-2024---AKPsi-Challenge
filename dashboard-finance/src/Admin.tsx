@@ -1,53 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import './Admin.css'; // Import plain CSS file
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-const AdminWrapper = styled.div`
-  padding: 20px;
-`;
-
-const Navbar = styled.div`
-  display: flex;
-  align-items: center;
-  background-color: #888;
-  padding: 10px;
-  color: white;
-`;
-
-const NavItem = styled.div`
-  margin-right: 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const DashboardContainer = styled.div`
-  display: flex;
-  gap: 20px;
-  margin-top: 20px;
-`;
-
-const Section = styled.div`
-  flex: 1;
-  background-color: #eee;
-  padding: 20px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-`;
-
-const RecentPayments = styled(Section)`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
 
 const data = {
   labels: ['Category 1', 'Category 2', 'Category 3', 'Category 4'],
@@ -62,30 +19,44 @@ const data = {
 
 const Admin: React.FC = () => {
   return (
-    <AdminWrapper>
-      <Navbar>
-        <NavItem>Welcome, Admin</NavItem>
-        <NavItem>Draft a budget</NavItem>
-        <NavItem>Sponsors</NavItem>
-        <NavItem>Track Dues/Fees</NavItem>
-        <NavItem>Fundraising</NavItem>
-      </Navbar>
-      <DashboardContainer>
-        <Section>
+    <div className="admin-wrapper">
+      <div><h1>Welcome, Admin</h1></div>
+      
+      {/* Navbar */}
+      <div className="navbar">
+        <Link to="/budget_drafter" className="nav-item">Draft a Budget</Link>
+        <Link to="/sponsors" className="nav-item">View Sponsors</Link>
+        <div className="nav-item">Track Dues/Fees</div>
+        <div className="nav-item">Fundraising</div>
+      </div>
+
+      {/* Dashboard Content */}
+      <div className="dashboard-container">
+        {/* Summary Section */}
+        <div className="summary">
+          <div className="summary-card">
+            <h3>Recent Sponsors</h3>
+            <p>1. State Farm - $10,000</p>
+            <p>2. ACME Corp - $7,500</p>
+            <p>3. Johnson & Johnson - $5,000</p>
+          </div>
+          <div className="summary-card">
+            <h3>Total Dues Paid</h3>
+            <p>$1,200,000</p>
+          </div>
+          <div className="summary-card">
+            <h3>Fundraising Goal Met</h3>
+            <p>$500,000 / $1,000,000</p>
+          </div>
+        </div>
+
+        {/* Pie Chart */}
+        <div className="section">
+          <h3>Budget Allocation</h3>
           <Pie data={data} />
-        </Section>
-        <Section>Section 2</Section>
-      </DashboardContainer>
-      <DashboardContainer>
-        <Section>Section 3</Section>
-        <RecentPayments>
-          <h3>Recent Due Payments</h3>
-          <p>State Farm - $10</p>
-          <p>Temi - $1M</p>
-          <p>Patrick - $1000</p>
-        </RecentPayments>
-      </DashboardContainer>
-    </AdminWrapper>
+        </div>
+      </div>
+    </div>
   );
 };
 

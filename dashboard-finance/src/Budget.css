@@ -1,0 +1,68 @@
+/* src/pages/Budget.css */
+
+.admin-wrapper {
+    padding: 20px;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    background-color: #888;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+  }
+  
+  .nav-item {
+    margin-right: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .nav-item:hover {
+    text-decoration: underline;
+  }
+  
+  .Budget-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;  /* Space between form sections */
+  }
+  
+  h1, h2 {
+    text-align: center;
+  }
+  
+  .cat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;  /* Space between text and input box */
+    margin-bottom: 15px;  /* Space between each category row */
+  }
+  
+  .cat p {
+    flex: 1;  /* Allows text to take up available space */
+    margin: 0;  /* Remove default margin */
+  }
+  
+  .cat input {
+    flex: 0.5;  /* Makes the input box smaller */
+    padding: 5px;
+    font-size: 1rem;
+    width: 100%;  /* Ensures input takes full available width */
+    max-width: 80px;  /* Limits the width to keep it compact */
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .subbutton{
+
+  }
+
+  .budg_cont{
+    display: flex;
+    flex-direction: column;
+  }

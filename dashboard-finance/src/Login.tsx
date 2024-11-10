@@ -11,7 +11,7 @@ const adminSection: HTMLElement = document.getElementById("adminSection") as HTM
 // Event listener for form submission
 loginForm.addEventListener("submit", handleLogin);
 
-function handleLogin(event: Event): void {
+function Login (event: Event): void {
     event.preventDefault();  // Prevent default form submission behavior
 
     const username: string = usernameInput.value;
@@ -33,3 +33,6 @@ function handleLogin(event: Event): void {
     usernameInput.value = "";
     passwordInput.value = "";
 }
+
+
+export default Login;

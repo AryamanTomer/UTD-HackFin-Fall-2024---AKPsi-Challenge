@@ -1,15 +1,17 @@
 import React from 'react';
+import AdminDashboard from '@/Admin'; // Import the AdminDashboard component
+import Sponsors from '@/Budget';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
-    const [count, setCount] = React.useState(0);
-
-    return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Hello, React + Vite!</h1>
-            <p>Count: {count}</p>
-            <button onClick={() => setCount(count + 1)}>Increment</button>
-        </div>
-    );
-}
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<AdminDashboard />} /> {/* Default route for AdminDashboard */}
+        <Route path="/sponsors" element={<Sponsors />} /> {/* New route for Sponsors */}
+      </Routes> 
+    </Router>
+  );
+};
 
 export default App;

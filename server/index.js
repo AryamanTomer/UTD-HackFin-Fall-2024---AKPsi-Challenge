@@ -5,6 +5,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
+
+import { authenticateToken } from "./authMiddleware.js";
+import authRouter from "./routers/AuthenticationRouter.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { User } from "./models/UserModel.js";
 import { Dues } from "./models/DuesModel.js";
@@ -22,6 +25,112 @@ app.use(morgan("common"))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(cors());
+app.use("/auth", authRouter);
+app.get("/profile", authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId).select("-password");
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch profile" });
+    }
+});
+
+app.post('/api/budget/create', async (req, res) => {
+    try {
+      const { category, allocatedAmount, spentAmount, lowBalanceReminderSent, approvalStatus } = req.body;
+      const remainingAmount = allocatedAmount - spentAmount;
+  
+      const budget = new Budget({
+        category,
+        allocatedAmount,
+        spentAmount,
+        remainingAmount,
+        lowBalanceReminderSent,
+        approvalStatus,
+      });
+  
+      await budget.save();
+      res.status(201).json({ message: 'Budget created successfully', data: budget });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating budget', error });
+    }
+  });
+
+app.post('/api/dues/create', async (req, res) => {
+    try {
+      const { member, amount, dueDate, status } = req.body;
+  
+      const dues = new Dues({
+        member,
+        amount,
+        dueDate,
+        status,
+      });
+  
+      await dues.save();
+      res.status(201).json({ message: 'Dues created successfully', data: dues });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating dues', error });
+    }
+  });
+
+app.post('/api/fundraising/create', async (req, res) => {
+    try {
+      const { goalAmount, raisedAmount, sponsors, deadline, contributors } = req.body;
+  
+      const fundraising = new Fundraising({
+        goalAmount,
+        raisedAmount,
+        sponsors,
+        goalAchieved: raisedAmount >= goalAmount,
+        deadline,
+        contributors,
+      });
+  
+      await fundraising.save();
+      res.status(201).json({ message: 'Fundraising campaign created successfully', data: fundraising });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating fundraising campaign', error });
+    }
+  });
+
+app.post('/api/reminder/create', async (req, res) => {
+    try {
+      const { user, dueType, lastSent, status } = req.body;
+  
+      const reminder = new Reminder({
+        user,
+        dueType,
+        lastSent,
+        status,
+      });
+  
+      await reminder.save();
+      res.status(201).json({ message: 'Reminder created successfully', data: reminder });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating reminder', error });
+    }
+  });
+
+app.post('/api/report/create', async (req, res) => {
+    try {
+      const { generatedBy, type, reportData, eventProfitability } = req.body;
+  
+      const report = new Report({
+        generatedBy,
+        type,
+        reportData,
+        eventProfitability,
+      });
+  
+      await report.save();
+      res.status(201).json({ message: 'Report created successfully', data: report });
+    } catch (error) {
+      res.status(500).json({ message: 'Error creating report', error });
+    }
+  });
 
 app.get("/users", async (req, res) => {
     try {

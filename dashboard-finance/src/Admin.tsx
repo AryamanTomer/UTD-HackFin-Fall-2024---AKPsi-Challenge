@@ -1,8 +1,9 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+import './Admin.css'; // Import plain CSS file
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import './Admin.css'; // Import plain CSS file
-import { Link } from "react-router-dom";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const data = {
@@ -19,8 +20,8 @@ const data = {
 const Admin: React.FC = () => {
   return (
     <div className="admin-wrapper">
-    <div><h1>Welcome, Admin</h1></div>
-        
+      <div><h1>Welcome, Admin</h1></div>
+      
       {/* Navbar */}
       <div className="navbar">
         <Link to="/budget_drafter" className="nav-item">Draft a Budget</Link>

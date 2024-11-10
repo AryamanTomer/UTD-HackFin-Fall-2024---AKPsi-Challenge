@@ -241,30 +241,47 @@ app.get("/transactions", async (req, res) => {
     }
 });
 
+app.post('/api/budget_drafter', async (req, res) => {
+    try{
+        const { capital,insurance, fees, outreach, brotherhood, charity, rushEvents } = req.body;
+        const categories = {
+            capital,
+            insurance,
+            fees,
+            outreach,
+            brotherhood,
+            charity,
+            rushEvents
+          };
+        //call fetchBudgetData and store it in data
+        const data = await fetchBudgetData(categories);
+        //send date
+        res.send(data.response.candidates[0].content.parts[0].text);
+    }catch(error){
+        res.status(500).send({error: "Failed to fetch data"}); //handle err
+    }
+})
+
 const PORT = process.env.PORT || 9000;
 mongoose
     .connect(process.env.MONGO_URL)
     .then(async () => {
         app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-        app.get('/budget_drafter', async (req, res) => {
-            try{
-                //call fetchBudgetData and store it in data
-                const data = await fetchBudgetData();
-                //send date
-                res.send(data.response.candidates[0].content.parts[0].text);
-            }catch(error){
-                res.status(500).send({error: "Failed to fetch data"}); //handle err
-            }
-        })
     })
     .catch((error) => console.log(`${error} did not connect`));
 
-    async function fetchBudgetData(){
+    async function fetchBudgetData(categories){
         //new instance of gemini w api key
         const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-        const prompt = "This is just a test, say hi";
-
+        const prompt = `You are a financial advisor for a frat, they have ${categories.capital} for the school year, in addition to that they have to pay ${categories.insurance} for insurance  and ${categories.fees} in fees
+        they have ranked 4 categories they want to spend the capital on 1-5 1 being most important 5 being least important, here are the ratings
+        Outreach: ${categories.outreach}, 
+        Brotherhood: ${categories.brotherhood}, 
+        Charity: ${categories.charity}, 
+        RushEvents: ${categories.rushEvents} 
+        based on this information come up with a budget that allocates capital to these resources based on their ratings, include the insurance and fees in your output. make the output a javascript object format with no additional text, just the required output if there is any amount left over add that as well, also dont add any desctiptions ONLY SEND IT AS A JAVASCRIPT OBJECT NO JSON `;
+        console.log(`${categories.insurance}`)
     const result = await model.generateContent(prompt); 
     return result;  
     }

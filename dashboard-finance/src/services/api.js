@@ -12,6 +12,8 @@ const api = axios.create({
 });
 
 
+
+
 export const createBudget = (budgetData) => api.post("/api/budget/create", budgetData);
 export const createDues = (duesData) => api.post("/api/dues/create", duesData);
 export const createFundraising = (fundraisingData) => api.post("/api/fundraising/create", fundraisingData);

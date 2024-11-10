@@ -6,6 +6,7 @@ import Login from '@/Login'
 import Budget from '@/Budget'
 import Sponsors from '@/Sponsors'
 import Duesandfees from '@/dues-and-fees'
+import Fundraising from '@/fundraising'
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -19,7 +20,7 @@ const App: React.FC = () => {
         <Route path="/budget_drafter" element={<Budget/>}/>
         <Route path="/sponsors" element={<Sponsors/>}/>
         <Route path="/dues-and-fees" element={<Duesandfees />} />
-
+        <Route path="/fundraising" element={<Fundraising />} />
       </Routes> 
     </Router>
   );

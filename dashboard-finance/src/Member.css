@@ -1,68 +1,104 @@
-/* src/pages/Budget.css */
+/* src/pages/Member.css */
 
-.admin-wrapper {
-    padding: 20px;
-  }
-  
-  .navbar {
-    display: flex;
-    align-items: center;
-    background-color: #888;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    color: white;
-  }
-  
-  .nav-item {
-    margin-right: 20px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
-  .nav-item:hover {
-    text-decoration: underline;
-  }
-  
-  .Budget-container {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;  /* Space between form sections */
-  }
-  
-  h1, h2 {
-    text-align: center;
-  }
-  
-  .cat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;  /* Space between text and input box */
-    margin-bottom: 15px;  /* Space between each category row */
-  }
-  
-  .cat p {
-    flex: 1;  /* Allows text to take up available space */
-    margin: 0;  /* Remove default margin */
-  }
-  
-  .cat input {
-    flex: 0.5;  /* Makes the input box smaller */
-    padding: 5px;
-    font-size: 1rem;
-    width: 100%;  /* Ensures input takes full available width */
-    max-width: 80px;  /* Limits the width to keep it compact */
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .subbutton{
+.member-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-  }
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #4CAF50;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: white;
+}
 
-  .budg_cont{
-    display: flex;
-    flex-direction: column;
-  }
+.nav-item {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.nav-button {
+  background-color: #fff;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.member-dashboard {
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.category-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.category-row p {
+  margin: 0;
+  font-weight: 500;
+  color: #333;
+  flex: 1;
+}
+
+.input-box {
+  width: 60px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.submit-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}

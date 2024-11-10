@@ -48,7 +48,7 @@ const Budget: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/api/budget_drafter', budgetData); // Send data to your backend
+      const response = await axios.post('http://localhost:1337/api/budget_drafter', budgetData); // Send data to your backend
       console.log('Data submitted successfully:', response.data);
 
       // Parse the response data and set up chart data

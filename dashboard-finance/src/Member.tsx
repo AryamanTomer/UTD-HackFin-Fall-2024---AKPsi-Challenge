@@ -1,13 +1,14 @@
 // src/pages/Member.tsx
 import React from 'react';
 import './Member.css'; // Import the CSS file
+import { Link } from 'react-router-dom';
 
 const Member: React.FC = () => {
   return (
     <div className="member-container">
       <div className="navbar">
         <div className="nav-item">Welcome, Name</div>
-        <div className="nav-item"><button className="nav-button">Pay Dues</button></div>
+        <Link to="/PayDues" className="nav-item">Pay Dues</Link>
         <div className="nav-item"><button className="nav-button">View Announcements</button></div>
         <div className="nav-item"><button className="nav-button">Fundraising</button></div>
         <div className="nav-item"><button className="nav-button">Events</button></div>

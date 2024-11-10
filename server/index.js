@@ -75,7 +75,42 @@ app.post('/api/dues/create', async (req, res) => {
       res.status(500).json({ message: 'Error creating dues', error });
     }
   });
-
+  app.get('/api/dues', async (req, res) => {
+    try {
+      const dues = await Dues.find();
+      res.status(200).json({ message: 'Dues retrieved successfully', data: dues });
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving dues', error });
+    }
+  });
+  app.get('/api/dues/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const due = await Dues.findById(id);
+  
+      if (!due) {
+        return res.status(404).json({ message: 'Dues not found' });
+      }
+  
+      res.status(200).json({ message: 'Due retrieved successfully', data: due });
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving due', error });
+    }
+  });
+  app.delete('/api/dues/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const due = await Dues.findByIdAndDelete(id);
+  
+      if (!due) {
+        return res.status(404).json({ message: 'Dues not found' });
+      }
+  
+      res.status(200).json({ message: 'Dues deleted successfully', data: due });
+    } catch (error) {
+      res.status(500).json({ message: 'Error deleting due', error });
+    }
+  });
 app.post('/api/fundraising/create', async (req, res) => {
     try {
       const { goalAmount, raisedAmount, sponsors, deadline, contributors } = req.body;

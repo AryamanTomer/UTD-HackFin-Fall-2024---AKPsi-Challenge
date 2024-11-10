@@ -1,7 +1,6 @@
 // src/pages/DuesAndFees.tsx
 import React from 'react';
 import styled from 'styled-components';
-
 const DuesWrapper = styled.div`
   padding: 20px;
   display: flex;
@@ -59,7 +58,6 @@ const DuesAndFees: React.FC = () => {
     { description: 'Event Participation Fee', amount: 50 },
     { description: 'Late Payment Fee', amount: 25 },
   ];
-
   const members = [
     { name: 'John Doe', amountOwed: 150 },
     { name: 'Jane Smith', amountOwed: 250 }, // Overdue/high amount

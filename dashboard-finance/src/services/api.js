@@ -13,7 +13,9 @@ const api = axios.create({
 
 
 
-
+export const fetchDues = () => api.get("/api/dues");
+export const fetchDueById = (id) => api.get(`/api/dues/${id}`);
+export const deleteDueById = (id) => api.delete(`/api/dues/${id}`);
 export const createBudget = (budgetData) => api.post("/api/budget/create", budgetData);
 export const createDues = (duesData) => api.post("/api/dues/create", duesData);
 export const createFundraising = (fundraisingData) => api.post("/api/fundraising/create", fundraisingData);

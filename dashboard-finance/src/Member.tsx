@@ -1,9 +1,8 @@
 // src/pages/Admin.tsx
 import React from 'react';
-import {Link} from 'react-router-dom'
 // import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 // import { Pie } from 'react-chartjs-2';
-import './Budget.css';  // Import the CSS file
+import './Member.css';  // Import the CSS file
 
 // ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,15 +17,18 @@ import './Budget.css';  // Import the CSS file
 //   ],
 // };
 
-const Budget: React.FC = () => {
+const Member: React.FC = () => {
   return (
-    <div className="budg_cont">
+    <div className="memb_cont">
       <div className="navbar">
-        <div className="nav-item">Budget Drafter </div>
-        <Link to="/admin" className="nav-item">Back</Link>
+        <div className="nav-item">Welcome, Name </div>
+        <div className="nav-item"><button>Pay Dues</button></div>
+        <div className="nav-item"><button>View Announcements</button></div>
+        <div className="nav-item"><button>Fundraising</button></div>
+        <div className="nav-item"><button>Events</button></div>
       </div>
 
-      <div className="Budget-container">
+      <div className="member-dashboard">
         <h1>Please Rate these categories 1-5</h1>
         <h2>1 - Most Important 5 - Least Important</h2>
         <div className="cat">
@@ -69,4 +71,4 @@ const Budget: React.FC = () => {
   );
 };
 
-export default Budget;
+export default Member;

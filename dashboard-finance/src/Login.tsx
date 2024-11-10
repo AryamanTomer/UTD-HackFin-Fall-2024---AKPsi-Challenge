@@ -1,38 +1,51 @@
-const validUsername: string = "admin";
-const validPassword: string = "password123";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css'; // Import the CSS file
 
-// Get the form elements by ID
-const loginForm: HTMLFormElement = document.getElementById("loginForm") as HTMLFormElement;
-const usernameInput: HTMLInputElement = document.getElementById("username") as HTMLInputElement;
-const passwordInput: HTMLInputElement = document.getElementById("password") as HTMLInputElement;
-const errorMessage: HTMLElement = document.getElementById("error-message") as HTMLElement;
-const adminSection: HTMLElement = document.getElementById("adminSection") as HTMLElement;
+const Login: React.FC = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [adminCode, setAdminCode] = useState('');
+  const navigate = useNavigate();
 
-// Event listener for form submission
-loginForm.addEventListener("submit", handleLogin);
-
-function Login (event: Event): void {
-    event.preventDefault();  // Prevent default form submission behavior
-
-    const username: string = usernameInput.value;
-    const password: string = passwordInput.value;
-
-    // Validate the login credentials
-    if (username === validUsername && password === validPassword) {
-        // Show the admin section and hide the error message
-        adminSection.style.display = "block";
-        errorMessage.style.display = "none";
+  const handleLogin = () => {
+    if (adminCode === 'ADMIN123') {
+      navigate('/admin');
     } else {
-        // Show error message and hide the admin section
-        errorMessage.textContent = "Invalid username or password. Please try again.";
-        errorMessage.style.display = "block";
-        adminSection.style.display = "none";
+      navigate('/user');
     }
+  };
 
-    // Clear the input fields after submission
-    usernameInput.value = "";
-    passwordInput.value = "";
-}
-
+  return (
+    <div className="container">
+      <h2>Login</h2>
+      <div className="form-group">
+        <label>Username</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label>Admin Code (Optional)</label>
+        <input
+          type="text"
+          value={adminCode}
+          onChange={(e) => setAdminCode(e.target.value)}
+        />
+      </div>
+      <button onClick={handleLogin}>Login</button>
+    </div>
+  );
+};
 
 export default Login;

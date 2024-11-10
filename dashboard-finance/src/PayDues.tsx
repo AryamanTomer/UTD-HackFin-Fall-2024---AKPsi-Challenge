@@ -36,11 +36,13 @@ const PayDues: React.FC = () => {
   const [paypalLoaded, setPaypalLoaded] = useState(false);
   const amount = "50.00"; // example amount for dues
 
+
+  console.log(process.env.PAYPAL_CLIENT_ID);
   useEffect(() => {
     const loadPaypal = async () => {
       try {
         const script = document.createElement('script');
-        script.src = `https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&components=buttons`;
+        script.src = `https://www.paypal.com/sdk/js?client-id=process.env.PAYPAL_CLIENT_ID&components=buttons`;
         script.onload = () => setPaypalLoaded(true);
         document.body.appendChild(script);
       } catch (error) {
@@ -57,11 +59,11 @@ const PayDues: React.FC = () => {
       <Description>Click the button below to securely pay your dues via PayPal.</Description>
 
       {paypalLoaded ? (
-        <PayPalScriptProvider options={{ clientId: "YOUR_PAYPAL_CLIENT_ID" }}>
+        <PayPalScriptProvider options={{ clientId:`${process.env.PAYPAL_CLIENT_ID}` }}>
           <PayPalContainer>
             <PayPalButtons
               style={{ layout: 'vertical' }}
-              createOrder={(data, actions) => {
+              createOrder={(_, actions) => { // Omitted `data` parameter
                 return actions.order.create({
                   intent: "CAPTURE",
                   purchase_units: [
@@ -74,7 +76,7 @@ const PayDues: React.FC = () => {
                   ],
                 });
               }}
-              onApprove={async (data, actions) => {
+              onApprove={async (_, actions) => { // Omitted `data` parameter
                 if (actions && actions.order) {
                   try {
                     const details = await actions.order.capture();
@@ -103,4 +105,3 @@ const PayDues: React.FC = () => {
 };
 
 export default PayDues;
-
